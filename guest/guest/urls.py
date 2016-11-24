@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^index/$', views.index), # 添加 index/路径配置
     url(r'^login_action/$', views.login_action),
     url(r'^event_manage/$', views.event_manage), # 添加登录后的跳转
+    url(r'^accounts/login/$', views.index),
+    url(r'^$', views.index),
 ]
