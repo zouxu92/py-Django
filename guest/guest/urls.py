@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^event_manage/$', views.event_manage), # 添加登录后的跳转
     url(r'^accounts/login/$', views.index),
     url(r'^$', views.index),
+    url(r'^sreach_name/$', views.sreach_name),
 ]
