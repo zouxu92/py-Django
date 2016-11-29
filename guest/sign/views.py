@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from sign.models import Event
+from sign.models import Event, Guest
 
 
 # Create your views here.
@@ -49,3 +49,20 @@ def sreach_name(request):
     return render(request, "event_manage.html", {"user":username,
                                                  "events": event_list})
 
+# 嘉宾管理
+@login_required
+def guest_manage(request):
+    username = request.session.get('user', '')
+    guest_list = Guest.objects.all()
+    return render(request, "guest_manage.html", {"user": username,
+                                                 "guests": guest_list})
+
+
+# 嘉宾电话搜索
+@login_required
+def sreach_phone(request):
+    username = request.session.get('user', '')
+    sreach_phone = request.GET.get("phone", "")
+    guest_list = Guest.objects.filter(phone__contains=sreach_phone)
+    return render(request, "guest_manage.html", {"user": username,
+                                                 "guests": guest_list})
