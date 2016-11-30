@@ -81,30 +81,49 @@ def sreach_phone(request):
 @login_required
 def sign_index(request, event_id):
     event = get_object_or_404(Event, id=event_id)
-    return render(request, 'sign_index.html', {'event': event})
+    # 已签到数
+    already_count = Guest.objects.filter(event_id=event_id).filter(sign=1).count()
+    # 当前发布会嘉宾数
+    total_count = Guest.objects.filter(event_id=event_id).count()
+    return render(request, 'sign_index.html', {'event': event,
+                                               'total_count': total_count,
+                                               'already_count': already_count})
 
 # 签到动作
 @login_required
 def sign_index_action(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     phone = request.POST.get('phone', '')
+    # 已签到数
+    already_count = Guest.objects.filter(event_id=event_id).filter(sign=1).count()
+    # 当前发布会嘉宾数
+    total_count = Guest.objects.filter(event_id=event_id).count()
+
 
     result = Guest.objects.filter(phone = phone)
     if not request:
         return render(request, 'sign_index.html', {'event': event,
-                                                   'hint': 'phone error.'})
+                                                   'hint': 'phone error.',
+                                                   'total_count': total_count,
+                                                   'already_count': already_count})
 
     result = Guest.objects.filter(phone = phone, event_id = event_id)
     if not result:
         return render(request, 'sign_index.html',{'event': event,
-                                                  'hint': 'event id or phone error.'})
+                                                  'hint': 'event id or phone error.',
+                                                  'total_count': total_count,
+                                                  'already_count': already_count})
 
     result = Guest.objects.get(phone = phone)
     if result.sign:
         return render(request, 'sign_index.html', {'event': event,
-                                                   'hint': "user has sign in."})
+                                                   'hint': "user has sign in.",
+                                                   'total_count': total_count,
+                                                   'already_count': already_count})
     else:
         Guest.objects.filter(phone = phone).update(sign = '1')
         return render(request, 'sign_index.html', {'event': event,
                                                    'hint':'sing in success!',
-                                                   'guest': result})
+                                                   'guest': result,
+                                                   'total_count': total_count,
+                                                   'already_count': already_count})
