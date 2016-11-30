@@ -21,11 +21,11 @@ from sign import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index),
     url(r'^index/$', views.index), # 添加 index/路径配置
     url(r'^login_action/$', views.login_action),
     url(r'^event_manage/$', views.event_manage), # 添加登录后的跳转
     url(r'^accounts/login/$', views.index),
-    url(r'^$', views.index),
     url(r'^sreach_name/$', views.sreach_name),  # 发布会名称搜索
     url(r'^guest_manage/$', views.guest_manage),
     url(r'^sreach_phone/$', views.sreach_phone), # 嘉宾姓名搜索
