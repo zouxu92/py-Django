@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -68,7 +68,6 @@ def guest_manage(request):
     return render(request, "guest_manage.html", {"user": username,
                                                  "guests": contacts})
 
-
 # 嘉宾电话搜索
 @login_required
 def sreach_phone(request):
@@ -77,3 +76,9 @@ def sreach_phone(request):
     guest_list = Guest.objects.filter(phone__contains=sreach_phone)
     return render(request, "guest_manage.html", {"user": username,
                                                  "guests": guest_list})
+
+# 签到页面
+@login_required
+def sign_index(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    return render(request, 'sign_index.html', {'event': event})

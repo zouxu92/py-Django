@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^sreach_name/$', views.sreach_name),  # 发布会名称搜索
     url(r'^guest_manage/$', views.guest_manage),
     url(r'^sreach_phone/$', views.sreach_phone), # 嘉宾姓名搜索
+    url(r'^sign_index/(?P<event_id>[0-9]+)/$', views.sign_index), # 签到页面
+    url(r'^sign_index_action/(?P<event_id>[0-9]+/$', views.sign_index_action), # 签到动作
 ]
