@@ -127,3 +127,10 @@ def sign_index_action(request, event_id):
                                                    'guest': result,
                                                    'total_count': total_count,
                                                    'already_count': already_count})
+
+# 退出登录
+@login_required
+def logout(request):
+    auth.logout(request)  # 退出登录
+    response = HttpResponseRedirect('/')
+    return response
