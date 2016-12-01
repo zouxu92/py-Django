@@ -27,13 +27,13 @@ def login_action(request):
         if user is not None:
             auth.login(request, user) # 登录
             request.session['user'] = username
-            response = HttpResponseRedirect('/event_manage/')
+            response = HttpResponseRedirect('/event_manage/') # 跳转到这个页面后,状态码302
             return response
         else:
             return render(request, 'index.html', {'error': 'username or password error!'})
 
 # 发布会管理
-@login_required
+#@login_required
 def event_manage(request):
     event_list = Event.objects.all()
     # username = request.COOKIES.get('user', '') # 读取浏览器cookie
@@ -42,7 +42,7 @@ def event_manage(request):
                                                  "events":event_list})
 
 # 发布会名称搜索
-@login_required
+#@login_required
 def sreach_name(request):
     username = request.session.get('user', '')
     sreach_name = request.GET.get("name", "")
@@ -51,7 +51,7 @@ def sreach_name(request):
                                                  "events": event_list})
 
 # 嘉宾管理
-@login_required
+#@login_required
 def guest_manage(request):
     username = request.session.get('user', '')
     guest_list = Guest.objects.all()
@@ -69,7 +69,7 @@ def guest_manage(request):
                                                  "guests": contacts})
 
 # 嘉宾电话搜索
-@login_required
+#@login_required
 def sreach_phone(request):
     username = request.session.get('user', '')
     sreach_phone = request.GET.get("phone", "")
@@ -78,7 +78,7 @@ def sreach_phone(request):
                                                  "guests": guest_list})
 
 # 签到页面
-@login_required
+#@login_required
 def sign_index(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     # 已签到数
@@ -90,7 +90,7 @@ def sign_index(request, event_id):
                                                'already_count': already_count})
 
 # 签到动作
-@login_required
+#@login_required
 def sign_index_action(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     phone = request.POST.get('phone', '')
@@ -122,8 +122,9 @@ def sign_index_action(request, event_id):
                                                    'already_count': already_count})
     else:
         Guest.objects.filter(phone = phone).update(sign = '1')
+        already_count += 1
         return render(request, 'sign_index.html', {'event': event,
-                                                   'hint':'sing in success!',
+                                                   'hint':'sign in success!',
                                                    'guest': result,
                                                    'total_count': total_count,
                                                    'already_count': already_count})
