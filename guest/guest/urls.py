@@ -14,9 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
-from sign import views
+from sign import views, views_if
 # 导入sign应用views文件
 
 urlpatterns = [
@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^sign_index/(?P<event_id>[0-9]+)/$', views.sign_index), # 签到页面
     url(r'^sign_index_action/(?P<event_id>[0-9]+)/$', views.sign_index_action), # 签到动作
     url(r'^logout/$', views.logout), # 退出登录
+    url(r'^api/', include('sign.urls', namespace='sign')), # 配置接口访问路径
+
 ]
