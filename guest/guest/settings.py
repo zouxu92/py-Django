@@ -25,7 +25,7 @@ SECRET_KEY = 'lv&7m^v!@2d3(u=i8s6w+gsn229=k8a_wd80$g%0xhl-46ui31'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,13 +81,29 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-'''
+'
+# 正式数据库
 DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.mysql',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'NAME': 'DjangoData',
+        'USER': 'root',
+        'PASSWORD': 'zx123456',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
+}
+'''
+# 测试数据库
+DATABASES = {
+    'default': {
+        'ENGINE':'django.db.backends.mysql',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'NAME': 'guest_test',
         'USER': 'root',
         'PASSWORD': 'zx123456',
         'OPTIONS': {
